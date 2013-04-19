@@ -1,0 +1,14 @@
+# gtest_trunk
+gtest_trunk/*
+
+# compilation results and output
+*.[oa]
+*.exe
+*.xml
+
+# core dump
+*.stackdump
+
+# Eclipse files
+.cproject
+.project
