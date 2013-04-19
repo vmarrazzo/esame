@@ -38,7 +38,8 @@ class ScacchieraSuite : public ::testing::Test {
 				esito = (NULL != tmp);
 				messaggioErrore << " vuoto!"; 
 				
-				t = tmp->getType();
+				if ( tmp != NULL )	
+					t = tmp->getType();
 			}
 			
 			EXPECT_TRUE(esito) << messaggioErrore.str();
@@ -76,6 +77,94 @@ TEST_F( ScacchieraSuite, SecondoTestCase) {
 	//ASSERT_TRUE( NULL != underTest_->getElemento( 1, 4)) << "Elemento (1,4) nullo!";
 	
 	checkElementoTavola( 1, 4, false, CAVALLO__);
+}
+
+TEST_F( ScacchieraSuite, TerzoTestCase) {
+
+	int ut_righe = 5;
+	int ut_colon = 5;
+	
+	underTest_ = new Scacchiera( ut_righe, ut_colon);
+	
+	underTest_->piazzamento( 1, 4, new Pezzo(CAVALLO__));
+	
+	checkElementoTavola( 1, 4, false, CAVALLO__);
+	
+	EXPECT_EQ( SUCCESSO_, underTest_->spostamento( 1, 4, SX__) );
+	
+	/**
+	 * La casella (1,1) si trova in alto a sx
+	 */
+	
+	checkElementoTavola( 1, 4, true, NULL__);
+	checkElementoTavola( 1, 3, false, CAVALLO__);
+	
+	EXPECT_EQ( SUCCESSO_, underTest_->spostamento( 1, 3, GIU_) );
+	
+	checkElementoTavola( 1, 3, true, NULL__);
+	checkElementoTavola( 2, 3, false, CAVALLO__);
+}
+
+TEST_F( ScacchieraSuite, QuartoTestCase) {
+
+	int ut_righe = 5;
+	int ut_colon = 5;
+	
+	underTest_ = new Scacchiera( ut_righe, ut_colon);
+	
+	underTest_->piazzamento( 1, 4, new Pezzo(CAVALLO__));
+	underTest_->piazzamento( 2, 3, new Pezzo(TORRE__));
+	
+	checkElementoTavola( 1, 4, false, CAVALLO__);
+	checkElementoTavola( 2, 3, false, TORRE__);
+	
+	EXPECT_EQ( SUCCESSO_, underTest_->spostamento( 1, 4, SX__) );
+	
+	/**
+	 * La casella (1,1) si trova in alto a sx
+	 */
+	
+	checkElementoTavola( 1, 4, true, NULL__);
+	checkElementoTavola( 1, 3, false, CAVALLO__);
+	
+	EXPECT_EQ( ARRIVO_OCCUPATA_, underTest_->spostamento( 1, 3, GIU_) );
+	
+	checkElementoTavola( 1, 3, false, CAVALLO__);
+	checkElementoTavola( 2, 3, false, TORRE__);
+}
+
+TEST_F( ScacchieraSuite, QuintoTestCase) {
+
+	int ut_righe = 5;
+	int ut_colon = 5;
+	
+	underTest_ = new Scacchiera( ut_righe, ut_colon);
+	
+	underTest_->piazzamento( 1, 4, new Pezzo(CAVALLO__));
+	underTest_->piazzamento( 2, 1, new Pezzo(PEDONE__));
+	underTest_->piazzamento( 3, 1, new Pezzo(TORRE__));
+	underTest_->piazzamento( 4, 2, new Pezzo(PEDONE__));
+	underTest_->piazzamento( 5, 2, new Pezzo(PEDONE__));
+	underTest_->piazzamento( 5, 3, new Pezzo(PEDONE__));
+	underTest_->piazzamento( 5, 4, new Pezzo(PEDONE__));
+
+	checkElementoTavola( 1, 4, false, CAVALLO__);
+	checkElementoTavola( 2, 1, false, PEDONE__);
+	checkElementoTavola( 3, 1, false, TORRE__);
+	checkElementoTavola( 4, 2, false, PEDONE__);
+	checkElementoTavola( 5, 2, false, PEDONE__);
+	checkElementoTavola( 5, 3, false, PEDONE__);
+	checkElementoTavola( 5, 4, false, PEDONE__);
+
+	EXPECT_TRUE(false) << "MANCA UN METODO DA IMPLEMENTARE!!!";
+	
+	checkElementoTavola( 1, 4, false, CAVALLO__);
+	checkElementoTavola( 1, 1, false, PEDONE__);
+	checkElementoTavola( 2, 1, false, TORRE__);
+	checkElementoTavola( 1, 2, false, PEDONE__);
+	checkElementoTavola( 2, 2, false, PEDONE__);
+	checkElementoTavola( 1, 3, false, PEDONE__);
+	checkElementoTavola( 2, 4, false, PEDONE__);
 }
 
 /**

@@ -46,22 +46,19 @@ namespace scacchi {
 	
 		Pezzo* resp = NULL;
 			
-		if ( riga < this->righe_ && colonna < this->colonne_ )
-			resp = this->tavola__[--riga][--colonna];
+		if ( riga <= this->righe_ && colonna <= this->colonne_ )
+			resp = this->tavola__[COOR2INDEX(riga)][COOR2INDEX(colonna)];
 			
 		return resp; 
 	}
 	
 	void Scacchiera::piazzamento( int riga, int colonna, Pezzo* p) {
 		
-		if ( riga < this->righe_ && colonna < this->colonne_ ) {
+		if ( riga <= this->righe_ && colonna <= this->colonne_ ) {
 		
-			int local_riga = riga - 1;
-			int local_colonna = colonna - 1;
-		
-			Pezzo* tmp = this->tavola__[local_riga][local_colonna];
+			Pezzo* tmp = this->tavola__[COOR2INDEX(riga)][COOR2INDEX(colonna)];
 			
-			this->tavola__[local_riga][local_colonna] = p;
+			this->tavola__[COOR2INDEX(riga)][COOR2INDEX(colonna)] = p;
 			
 			// per casella solo un pezzo ed un pezzo può state
 			// solo su una casella per volta
@@ -73,46 +70,43 @@ namespace scacchi {
 	
 	ESITO Scacchiera::spostamento( int riga, int colonna, DIREZIONE d) {
 	
-		ESITO resp = SUCCESSO_;
-
-		int local_riga_inizio 		= riga - 1;
-		int local_colonna_inizio 	= colonna - 1;
+		ESITO resp = PARTENZA_VUOTA_;
 
 		int delta_riga 		= 0;
 		int delta_colonna 	= 0;
 		
-		delta_riga += ( d == SX__ ? -1 : 0 );
-		delta_riga += ( d == DX__ ?  1 : 0 );
+		delta_colonna += ( d == SX__ ? -1 : 0 );
+		delta_colonna += ( d == DX__ ?  1 : 0 );
 		
-		delta_colonna += ( d == GIU_ ? -1 : 0 );
-		delta_colonna += ( d == SU__ ?  1 : 0 );		
-		
-		int local_riga_fine			= local_riga_inizio + delta_riga;
-		int local_colonna_fine		= local_colonna_inizio + delta_colonna;
-		
+		delta_riga += ( d == GIU_ ?  1 : 0 );
+		delta_riga += ( d == SU__ ? -1 : 0 );
+
+		int riga_arrivo = riga + delta_riga;
+		int colonna_arrivo = colonna + delta_colonna;
+
 		// se non esiste un pezzo nella partenza
 		if ( 	( riga > this->righe_ || colonna > this->colonne_ ) ||
-				this->tavola__[local_riga_inizio][local_colonna_inizio] == NULL	
+				this->tavola__[COOR2INDEX(riga)][COOR2INDEX(colonna)] == NULL	
 			)
 			resp = PARTENZA_VUOTA_;
 		else // c'è il pezzo di partenza
 		{
 			// se la casella di arrivo esiste
-			if ( 	( local_riga_fine + 1 ) > this->righe_ || 
-					( local_colonna_fine + 1 ) > this->colonne_ 
+			if ( 	riga_arrivo > this->righe_ || 
+					colonna_arrivo > this->colonne_ 
 				)
 				resp = ARRIVO_INESISTENTE_;
 			else // c'è la casella di arrivo
 			{
-				Pezzo* tmp = this->tavola__[local_riga_fine][local_colonna_fine];
+				Pezzo* tmp = this->tavola__[COOR2INDEX(riga_arrivo)][COOR2INDEX(colonna_arrivo)];
 				
 				if ( tmp != NULL )
 					resp = ARRIVO_OCCUPATA_;
 				else // arrivo libera
 				{
-					this->tavola__[local_riga_fine][local_colonna_fine] = this->tavola__[local_riga_inizio][local_colonna_inizio];
+					this->tavola__[COOR2INDEX(riga_arrivo)][COOR2INDEX(colonna_arrivo)] = this->tavola__[COOR2INDEX(riga)][COOR2INDEX(colonna)];
 					
-					this->tavola__[local_riga_inizio][local_colonna_inizio] = NULL;
+					this->tavola__[COOR2INDEX(riga)][COOR2INDEX(colonna)] = NULL;
 					
 					resp = SUCCESSO_;
 				}

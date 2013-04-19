@@ -7,6 +7,9 @@ scacchiera.h
 #ifndef SCACCHIERA_
 #define SCACCHIERA_
 
+#define COOR2INDEX(coord) (coord-1)
+#define INDEX2COOR(index) (index+1)
+
 #include <cstdlib>
 #include "pezzo.h"
 
@@ -32,6 +35,7 @@ namespace scacchi {
 
 		private:
 			// dim scacchiera
+			// la casella (1,1) si suppone che è quella in alto a sx
 			int righe_;	
 			int colonne_;
 			

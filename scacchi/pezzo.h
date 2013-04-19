@@ -9,15 +9,15 @@ Pezzo.h
 
 namespace scacchi {
 
-	typedef int TIPO;
+	typedef char TIPO;
 
-	static const TIPO NULL__ 		= -1;
-	static const TIPO PEDONE__ 		= 0;
-	static const TIPO TORRE__ 		= 1;
-	static const TIPO CAVALLO__ 	= 2;
-	static const TIPO ALFIERE__ 	= 3;
-	static const TIPO REGINA__ 		= 4;
-	static const TIPO RE__ 			= 5;
+	static const TIPO NULL__ 		= ' ';
+	static const TIPO PEDONE__ 		= 'P';
+	static const TIPO TORRE__ 		= 'T';
+	static const TIPO CAVALLO__ 	= 'C';
+	static const TIPO ALFIERE__ 	= 'A';
+	static const TIPO REGINA__ 		= 'R';
+	static const TIPO RE__ 			= 'E';
 
 	class Pezzo {
 
