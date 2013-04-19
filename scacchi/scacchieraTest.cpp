@@ -3,6 +3,8 @@
 #include <string>
 #include <sstream>
 
+#include "move2Nord.h"
+
 using namespace std;
 using namespace scacchi;
 
@@ -133,7 +135,21 @@ TEST_F( ScacchieraSuite, QuartoTestCase) {
 	checkElementoTavola( 2, 3, false, TORRE__);
 }
 
-TEST_F( ScacchieraSuite, QuintoTestCase) {
+TEST_F( ScacchieraSuite, SimpleMove2NordTestCase) {
+
+	int ut_righe = 5;
+	int ut_colon = 5;
+	
+	underTest_ = new Scacchiera( ut_righe, ut_colon);
+
+	underTest_->piazzamento( 3, 2, new Pezzo(PEDONE__));
+	
+	move2Nord(underTest_);
+	
+	checkElementoTavola( 1, 2, false, PEDONE__);
+}
+	
+TEST_F( ScacchieraSuite, Move2NordTestCase) {
 
 	int ut_righe = 5;
 	int ut_colon = 5;
@@ -156,7 +172,8 @@ TEST_F( ScacchieraSuite, QuintoTestCase) {
 	checkElementoTavola( 5, 3, false, PEDONE__);
 	checkElementoTavola( 5, 4, false, PEDONE__);
 
-	EXPECT_TRUE(false) << "MANCA UN METODO DA IMPLEMENTARE!!!";
+	//EXPECT_TRUE(false) << "MANCA UN METODO DA IMPLEMENTARE!!!";
+	move2Nord(underTest_);
 	
 	checkElementoTavola( 1, 4, false, CAVALLO__);
 	checkElementoTavola( 1, 1, false, PEDONE__);

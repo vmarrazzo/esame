@@ -92,8 +92,8 @@ namespace scacchi {
 		else // c'è il pezzo di partenza
 		{
 			// se la casella di arrivo esiste
-			if ( 	riga_arrivo > this->righe_ || 
-					colonna_arrivo > this->colonne_ 
+			if ( 	riga_arrivo > this->righe_ || colonna_arrivo > this->colonne_ || // over range
+					riga_arrivo <= 0 || colonna_arrivo <= 0 // under range
 				)
 				resp = ARRIVO_INESISTENTE_;
 			else // c'è la casella di arrivo
