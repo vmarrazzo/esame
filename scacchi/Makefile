@@ -20,18 +20,31 @@ GTEST_SRCS_ = $(GTEST_DIR)/src/*.cc $(GTEST_DIR)/src/*.h $(GTEST_HEADERS)
 CXXFLAGS += -g3 -Wall -Wextra
 #CXXFLAGS += -ggdb -Wall -Wextra
 #CXXFLAGS += -g -Wall -Wextra -std=c++0x
+CXXFLAGS_COVERATE = $(CXXFLAGS) -fprofile-arcs -ftest-coverage
 
 # linker flags
-LDFLAGS = -Wall -Wextra
+LDFLAGS = -Wall -Wextra  
+LDFLAGS_COVERAGE = $(LDFLAGS) -fprofile-arcs -ftest-coverage
+
+SOURCES = pezzo.cpp scacchiera.cpp move2Nord.cpp
 
 clean :
-	rm -f $(TESTS) *.a *.o *.exe *.stackdump *.xml
+	rm -f $(TESTS) *.a *.o *.exe *.stackdump *.xml *.gc*
 	
 all : clean pezzo.o scacchiera.o
 
 #./scacchieraTest.exe --gtest_shuffle --gtest_repeat=10
 test : all scacchieraTest.exe
 	./scacchieraTest.exe
+	
+coverage : coverage_prepare all scacchieraTest.exe
+	./scacchieraTest.exe
+	gcov $(SOURCES)
+	
+# modifico le variabili di compilazione per la coverage
+coverage_prepare :
+	$(eval LDFLAGS = $(LDFLAGS_COVERAGE))
+	$(eval CXXFLAGS = $(CXXFLAGS_COVERATE))
 	
 # da notare  nel comando awk ci vorrebbe solo un $ 
 # ma per la corretta interpreatazione in make diventano $$

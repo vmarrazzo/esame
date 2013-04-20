@@ -12,3 +12,8 @@ gtest_trunk/*
 # Eclipse files
 .cproject
 .project
+
+# Coverage files
+*.gcno
+*.gcov
+*.gcda
