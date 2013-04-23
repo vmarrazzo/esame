@@ -52,7 +52,7 @@ decode_stackdump : scacchieraTest.exe
 	awk '/^[0-9]/{print $$2}' $^.stackdump | addr2line.exe -f -e $^
 	
 scacchieraTest.exe : pezzo.o scacchiera.o scacchieraTest.o move2Nord.o gtest.a
-	$(CXX) $(GTEST_CPPFLAGS) $(LDFLAGS) -lpthread $^ -o $@
+	$(CXX) $(GTEST_CPPFLAGS) $(LDFLAGS) -pthread -lpthread $^ -o $@
 
 scacchieraTest.o :
 	$(CXX) $(GTEST_CPPFLAGS) -I$(GTEST_DIR) $(CXXFLAGS) -c scacchieraTest.cpp	
