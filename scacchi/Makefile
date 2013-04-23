@@ -26,6 +26,9 @@ CXXFLAGS_COVERATE = $(CXXFLAGS) -fprofile-arcs -ftest-coverage
 LDFLAGS = -Wall -Wextra  
 LDFLAGS_COVERAGE = $(LDFLAGS) -fprofile-arcs -ftest-coverage
 
+#linked std library
+LD_LIBRARY = -pthread -lpthread
+
 SOURCES = pezzo.cpp scacchiera.cpp move2Nord.cpp
 
 clean :
@@ -52,7 +55,7 @@ decode_stackdump : scacchieraTest.exe
 	awk '/^[0-9]/{print $$2}' $^.stackdump | addr2line.exe -f -e $^
 	
 scacchieraTest.exe : pezzo.o scacchiera.o scacchieraTest.o move2Nord.o gtest.a
-	$(CXX) $(GTEST_CPPFLAGS) $(LDFLAGS) -pthread -lpthread $^ -o $@
+	$(CXX) $(GTEST_CPPFLAGS) $(LDFLAGS) $(LD_LIBRARY) $^ -o $@
 
 scacchieraTest.o :
 	$(CXX) $(GTEST_CPPFLAGS) -I$(GTEST_DIR) $(CXXFLAGS) -c scacchieraTest.cpp	
