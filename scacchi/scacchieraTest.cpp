@@ -147,6 +147,14 @@ TEST_F( ScacchieraSuite, SimpleMove2NordTestCase) {
 	move2Nord(underTest_);
 	
 	checkElementoTavola( 1, 2, false, PEDONE__);
+	
+	/**
+	 * Check that other cells in same column are NULL 
+	 */
+	checkElementoTavola( 2, 2, true, NULL__);
+	checkElementoTavola( 3, 2, true, NULL__);
+	checkElementoTavola( 4, 2, true, NULL__);
+	checkElementoTavola( 5, 2, true, NULL__);
 }
 	
 TEST_F( ScacchieraSuite, Move2NordTestCase) {
