@@ -16,9 +16,10 @@ namespace ristorazione {
 
   typedef int ESITO;
   
-  static const ESITO SUCCESSO_        =  0;
-  static const ESITO TAVOLO_PIENO_    = -1;
-  static const ESITO TAVOLO_OCCUPATO_ = -2;
+  static const ESITO SUCCESSO_              =  0;
+  static const ESITO TAVOLO_PIENO_          = -1;
+  static const ESITO TAVOLO_OCCUPATO_       = -2;
+  static const ESITO PERSONA_GIA_PRESENTE_  = -3;
 
   class Tavolo {
 
