@@ -4,7 +4,7 @@ using namespace std;
 
 namespace ristorazione {
 
-    Tavolo::Tavolo(int posti) {
+    Tavolo::Tavolo(unsigned int posti) {
       
         this->posti__ = posti;
     }
@@ -35,7 +35,7 @@ namespace ristorazione {
     }
 
 
-    ESITO Tavolo::modificaTavolo(int posti)  {
+    ESITO Tavolo::modificaTavolo(unsigned int posti)  {
   
         ESITO resp = TAVOLO_OCCUPATO_;
   

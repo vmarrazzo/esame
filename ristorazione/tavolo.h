@@ -24,15 +24,15 @@ namespace ristorazione {
   class Tavolo {
 
       private:
-        int posti__;
+        unsigned int posti__;
         list<Persona*> persone__;
 
       public:
-        Tavolo(int posti);
+        Tavolo(unsigned int posti);
         ~Tavolo();
         ESITO aggiungiPersona(Persona* p);
         void liberaTavolo();
-        ESITO modificaTavolo(int posti);
+        ESITO modificaTavolo(unsigned int posti);
   };
 
 }

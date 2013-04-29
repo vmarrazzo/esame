@@ -23,11 +23,11 @@ namespace ristorazione {
         list<Persona*> persone__;
 
       public:
-        Ristorante(int numTavoli, Tavolo* tavoli);
+        Ristorante(unsigned int numTavoli, Tavolo** tavoli);
         ~Ristorante();
-        ESITO aggiungiPersona(Persona* p, int tavolo);
-        void liberaTavolo(int tavolo);
-        ESITO modificaTavolo(int tavolo, int posti);
+        ESITO aggiungiPersona(Persona* p, unsigned int tavolo);
+        void liberaTavolo(unsigned int tavolo);
+        ESITO modificaTavolo(unsigned int tavolo, unsigned int posti);
   };
 
 }
