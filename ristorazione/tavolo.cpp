@@ -12,6 +12,8 @@ namespace ristorazione {
     Tavolo::~Tavolo() {
 
         // gestione de-allocazione TBD
+		// il tavolo dealloca solo la lista alle persone ci pensa il ristorante
+		this->persone__.clear();
     }
 
     ESITO Tavolo::aggiungiPersona(Persona* p)  {

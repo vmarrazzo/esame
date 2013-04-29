@@ -21,13 +21,14 @@ namespace ristorazione {
       private:
         vector<Tavolo*> tavoli__;
         list<Persona*> persone__;
+		bool personaGiaPresente(Persona* p);
 
       public:
         Ristorante(unsigned int numTavoli, Tavolo** tavoli);
         ~Ristorante();
-        ESITO aggiungiPersona(Persona* p, unsigned int tavolo);
-        void liberaTavolo(unsigned int tavolo);
-        ESITO modificaTavolo(unsigned int tavolo, unsigned int posti);
+        ESITO aggiungiPersona(Persona* p, unsigned int numTavolo);
+        void liberaTavolo(unsigned int numTavolo);
+        ESITO modificaTavolo(unsigned int numTavolo, unsigned int posti);
   };
 
 }

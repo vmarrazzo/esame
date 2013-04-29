@@ -51,7 +51,7 @@ class RistoranteSuite : public ::testing::Test {
 		*/
 };
 
-TEST_F( RistoranteSuite, PrimoTestCase) {
+TEST_F( RistoranteSuite, SempliceInserimento) {
 
 	Tavolo** input = new Tavolo*[2];
 	
@@ -62,8 +62,27 @@ TEST_F( RistoranteSuite, PrimoTestCase) {
 	
 	Persona* tmp = new Persona();
 	
-	EXPECT_EQ( SUCCESSO_, underTest_->aggiungiPersona( tmp, (unsigned int)1)) << "Errore sull'inserimento persona."; 
-	//EXPECT_EQ(  ut_colon, underTest_->getNumColonne()) << "Errore sulle colonne memorizzate.";
+	unsigned int tavolo = 1;
+		
+	EXPECT_EQ( SUCCESSO_, underTest_->aggiungiPersona( tmp, tavolo)) << "Errore primo inserimento persona."; 
+}
+
+TEST_F( RistoranteSuite, DoppioInserimento) {
+
+	Tavolo** input = new Tavolo*[2];
+	
+	input[0] = new Tavolo(3);
+	input[1] = new Tavolo(2);
+	
+	underTest_ = new Ristorante( 2, input);
+	
+	Persona* persona = new Persona();
+	
+	unsigned int tavolo = 1;
+	
+	EXPECT_EQ( SUCCESSO_, underTest_->aggiungiPersona( persona, tavolo) ) << "Errore primo inserimento persona."; 
+	//EXPECT_EQ( PERSONA_GIA_PRESENTE_, underTest_->aggiungiPersona( persona, tavolo) ) << "Errore secondo inserimento stessa persona."; 
+	EXPECT_EQ( SUCCESSO_, underTest_->aggiungiPersona( persona, tavolo) ) << "Errore secondo inserimento stessa persona."; 
 
 }
 

@@ -15,19 +15,11 @@ namespace ristorazione {
 	
 	Ristorante::~Ristorante() {
 
-		unsigned int numTavoli = this->tavoli__.size();
-	
 		for ( vector<Tavolo*>::iterator it = this->tavoli__.begin(); it != this->tavoli__.end(); ++it )	
-		//for ( int index = 0 ; index < numTavoli ; index++ )
 		{
 			Tavolo* tmp = *it;
 			delete tmp;
 			this->tavoli__.erase(it);
-		/*
-			Tavolo* tmp = this->tavoli__[index];
-			delete tmp;
-			this->tavoli__.erase( this->tavoli__.begin() + index);
-		*/
 		}
 		
 		for ( list<Persona*>::iterator it = this->persone__.begin(); it != this->persone__.end(); ++it )
@@ -38,19 +30,62 @@ namespace ristorazione {
 		}
 	}
 	
-	ESITO Ristorante::aggiungiPersona(Persona* p, unsigned int tavolo) {
+	ESITO Ristorante::aggiungiPersona(Persona* p, unsigned int numTavolo) {
 	
+		ESITO resp = FALLIMENTO_;
+		
+		if ( personaGiaPresente(p) )
+			resp = PERSONA_GIA_PRESENTE_;
+		else if ( numTavolo <= this->tavoli__.size() ) {
+		
+			unsigned int indexTavolo = TAV2INDEX(numTavolo);
+		
+			Tavolo* tmp = this->tavoli__[indexTavolo];
+		
+			resp = tmp->aggiungiPersona(p);
+			
+			if ( resp == SUCCESSO_ )
+				this->persone__.push_back(p);
+		}
+
+		return resp;
+	}
+	
+	void Ristorante::liberaTavolo(unsigned int numTavolo) {
+	
+		if ( numTavolo <= this->tavoli__.size() ) {
+
+			unsigned int indexTavolo = TAV2INDEX(numTavolo);
+
+			Tavolo* tmp = this->tavoli__[indexTavolo];
+
+			tmp->liberaTavolo();
+		}
 	
 	}
 	
-	void Ristorante::liberaTavolo(unsigned int tavolo) {
+	ESITO Ristorante::modificaTavolo(unsigned int numTavolo, unsigned int posti) {
 	
-	
+		ESITO resp = FALLIMENTO_;
+
+		return resp;
 	}
 	
-	ESITO Ristorante::modificaTavolo(unsigned int tavolo, unsigned int posti) {
-	
-	
+	bool Ristorante::personaGiaPresente(Persona* p) {
+		
+		bool resp = false;
+		
+		for ( list<Persona*>::iterator it = this->persone__.begin(); it != this->persone__.end(); ++it )
+		{
+			Persona* tmp = *it;
+			
+			if ( p == tmp ) {
+				resp = true;
+				break;
+			}
+		}
+		
+		return resp;
 	}
 	
 }
