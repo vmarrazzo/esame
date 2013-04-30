@@ -31,9 +31,14 @@ namespace ristorazione {
         return resp;
     }
 
-    void Tavolo::liberaTavolo()  {
+    list<Persona*>* Tavolo::liberaTavolo()  {
     
+    	// questo metodo ritorna un'array di persone da togliere dalla lista del ristorante
+    	list<Persona*>* resp = new list<Persona*>(this->persone__);
+
         this->persone__.clear();
+
+        return resp;
     }
 
 

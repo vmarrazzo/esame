@@ -22,6 +22,8 @@ namespace ristorazione {
         vector<Tavolo*> tavoli__;
         list<Persona*> persone__;
 		bool personaGiaPresente(Persona* p);
+		void liberaListaRistorante(list<Persona*>* ListaDaRimuovere);
+		void rimuoviPersonaDaListaRistorante(Persona* PersonadaRimuovere);
 
       public:
         Ristorante(unsigned int numTavoli, Tavolo** tavoli);

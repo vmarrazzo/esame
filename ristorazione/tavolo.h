@@ -35,7 +35,7 @@ namespace ristorazione {
         Tavolo(unsigned int posti);
         ~Tavolo();
         ESITO aggiungiPersona(Persona* p);
-        void liberaTavolo();
+        list<Persona*>* liberaTavolo();
         ESITO modificaTavolo(unsigned int posti);
   };
 

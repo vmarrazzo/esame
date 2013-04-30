@@ -64,7 +64,9 @@ namespace ristorazione {
 
 			Tavolo* tmp = this->tavoli__[indexTavolo];
 
-			tmp->liberaTavolo();
+			list<Persona*>* daRimuovere = tmp->liberaTavolo();
+
+			liberaListaRistorante(daRimuovere);
 		}
 	
 	}
@@ -102,4 +104,36 @@ namespace ristorazione {
 		return resp;
 	}
 	
+	void Ristorante::liberaListaRistorante(list<Persona*>* ListaDaRimuovere) {
+
+		list<Persona*> tmp = *ListaDaRimuovere;
+
+		// se il tavolo non era vuoto
+		if ( !tmp.empty() )
+			do {
+				list<Persona*>::iterator it = tmp.begin();
+
+				rimuoviPersonaDaListaRistorante(*it);
+
+				tmp.erase(it);
+			}
+			while( !tmp.empty() );
+	}
+
+	void Ristorante::rimuoviPersonaDaListaRistorante(Persona* PersonadaRimuovere) {
+
+		for ( list<Persona*>::iterator it = this->persone__.begin(); it != this->persone__.end(); ++it )
+		{
+			Persona* tmp = *it;
+
+			if ( *PersonadaRimuovere == *tmp ) {
+				delete PersonadaRimuovere;
+				this->persone__.erase(it);
+				break;
+			}
+		}
+	}
+
+
+
 }
