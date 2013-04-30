@@ -6,7 +6,7 @@ namespace ristorazione {
 
 	Ristorante::Ristorante(unsigned int numTavoli, Tavolo** tavoli) {
 	
-		// questo codice non è necessario
+		// questo codice non ï¿½ necessario
 		//this->persone__ = list<Persona*>();
 		//this->tavoli__ = vector<Tavolo*>();
 		
@@ -127,7 +127,8 @@ namespace ristorazione {
 			Persona* tmp = *it;
 
 			if ( *PersonadaRimuovere == *tmp ) {
-				delete PersonadaRimuovere;
+				// consideriamo gli oggetti persona entitÃ  esterne al ristorante
+				//delete PersonadaRimuovere;
 				this->persone__.erase(it);
 				break;
 			}
