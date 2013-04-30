@@ -80,9 +80,8 @@ TEST_F( RistoranteSuite, DoppioInserimento) {
 	
 	unsigned int tavolo = 1;
 	
-	EXPECT_EQ( SUCCESSO_, underTest_->aggiungiPersona( persona, tavolo) ) << "Errore primo inserimento persona."; 
-	//EXPECT_EQ( PERSONA_GIA_PRESENTE_, underTest_->aggiungiPersona( persona, tavolo) ) << "Errore secondo inserimento stessa persona."; 
-	EXPECT_EQ( SUCCESSO_, underTest_->aggiungiPersona( persona, tavolo) ) << "Errore secondo inserimento stessa persona."; 
+	EXPECT_EQ( SUCCESSO_, underTest_->aggiungiPersona( persona, tavolo) ) << "Errore primo inserimento persona.";
+	EXPECT_EQ( PERSONA_GIA_PRESENTE_, underTest_->aggiungiPersona( persona, tavolo) ) << "Errore secondo inserimento stessa persona.";
 
 }
 

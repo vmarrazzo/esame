@@ -6,8 +6,9 @@ namespace ristorazione {
 
 	Ristorante::Ristorante(unsigned int numTavoli, Tavolo** tavoli) {
 	
-		this->persone__ = list<Persona*>();
-		this->tavoli__ = vector<Tavolo*>();
+		// questo codice non è necessario
+		//this->persone__ = list<Persona*>();
+		//this->tavoli__ = vector<Tavolo*>();
 		
 		for ( unsigned int index = 0 ; index < numTavoli ; index++ )
 			this->tavoli__.insert( this->tavoli__.begin() + index, tavoli[index]);
@@ -15,19 +16,23 @@ namespace ristorazione {
 	
 	Ristorante::~Ristorante() {
 
-		for ( vector<Tavolo*>::iterator it = this->tavoli__.begin(); it != this->tavoli__.end(); ++it )	
+		do
 		{
+			vector<Tavolo*>::iterator it = this->tavoli__.begin();
 			Tavolo* tmp = *it;
 			delete tmp;
 			this->tavoli__.erase(it);
 		}
+		while( !this->tavoli__.empty() );
 		
-		for ( list<Persona*>::iterator it = this->persone__.begin(); it != this->persone__.end(); ++it )
+		do
 		{
+			list<Persona*>::iterator it = this->persone__.begin();
 			Persona* tmp = *it;
 			delete tmp;
 			this->persone__.erase(it);
 		}
+		while( !this->persone__.empty() );
 	}
 	
 	ESITO Ristorante::aggiungiPersona(Persona* p, unsigned int numTavolo) {
@@ -68,6 +73,15 @@ namespace ristorazione {
 	
 		ESITO resp = FALLIMENTO_;
 
+		if ( numTavolo <= this->tavoli__.size() ) {
+
+			unsigned int indexTavolo = TAV2INDEX(numTavolo);
+
+			Tavolo* tmp = this->tavoli__[indexTavolo];
+
+			resp = tmp->modificaTavolo(posti);
+		}
+
 		return resp;
 	}
 	
@@ -79,7 +93,7 @@ namespace ristorazione {
 		{
 			Persona* tmp = *it;
 			
-			if ( p == tmp ) {
+			if ( *p == *tmp ) {
 				resp = true;
 				break;
 			}
