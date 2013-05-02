@@ -11,8 +11,7 @@ namespace ristorazione {
 
     Tavolo::~Tavolo() {
 
-        // gestione de-allocazione TBD
-		// il tavolo dealloca solo la lista alle persone ci pensa il ristorante
+    	// qui viene pulita la lista del tavolo
 		this->persone__.clear();
     }
 
@@ -42,7 +41,7 @@ namespace ristorazione {
     }
 
 
-    ESITO Tavolo::modificaTavolo(unsigned int posti)  {
+    ESITO Tavolo::cambiaNumeroPosti(unsigned int posti)  {
   
         ESITO resp = TAVOLO_OCCUPATO_;
   

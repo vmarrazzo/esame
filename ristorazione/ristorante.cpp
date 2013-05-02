@@ -6,10 +6,6 @@ namespace ristorazione {
 
 	Ristorante::Ristorante(unsigned int numTavoli, Tavolo** tavoli) {
 	
-		// questo codice non � necessario
-		//this->persone__ = list<Persona*>();
-		//this->tavoli__ = vector<Tavolo*>();
-		
 		for ( unsigned int index = 0 ; index < numTavoli ; index++ )
 			this->tavoli__.insert( this->tavoli__.begin() + index, tavoli[index]);
 	}
@@ -81,7 +77,7 @@ namespace ristorazione {
 
 			Tavolo* tmp = this->tavoli__[indexTavolo];
 
-			resp = tmp->modificaTavolo(posti);
+			resp = tmp->cambiaNumeroPosti(posti);
 		}
 
 		return resp;
@@ -127,8 +123,11 @@ namespace ristorazione {
 			Persona* tmp = *it;
 
 			if ( *PersonadaRimuovere == *tmp ) {
-				// consideriamo gli oggetti persona entità esterne al ristorante
+
+				// le persone vengono rimosse dalla lista del ristorante
+				// non vengono cancellate qui dentro
 				//delete PersonadaRimuovere;
+
 				this->persone__.erase(it);
 				break;
 			}
