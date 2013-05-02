@@ -110,6 +110,41 @@ TEST_F( RistoranteSuite, LiberaTavolo) {
 
 }
 
+TEST_F( RistoranteSuite, ModificaTavolo) {
+
+	Tavolo** input = new Tavolo*[1];
+
+	input[0] = new Tavolo(2); // Tavolo 1
+
+	underTest_ = new Ristorante( 1, input);
+
+	unsigned int tavolo = 1;
+
+	Persona* prima 		= new Persona();
+	Persona* seconda 	= new Persona();
+	Persona* terza	 	= new Persona();
+
+	EXPECT_EQ( SUCCESSO_, underTest_->aggiungiPersona( prima, 	tavolo) ) << "Errore inserimento prima persona 1/2.";
+	EXPECT_EQ( SUCCESSO_, underTest_->aggiungiPersona( seconda, tavolo) ) << "Errore inserimento seconda persona 1/2.";
+	EXPECT_EQ( TAVOLO_PIENO_, underTest_->aggiungiPersona( terza, tavolo) )   << "Errore inserimento terza persona 1/2.";
+
+	// ok bisogna modificare il tavolo 
+	EXPECT_EQ( TAVOLO_OCCUPATO_, underTest_->modificaTavolo( tavolo, 3) )   << "Errore sulla modifica di un tavolo occupato 1/2.";
+	
+	// facciamo prima alzare le persone
+	underTest_->liberaTavolo(tavolo);
+
+	// riproviamo a modificare il tavolo 
+	EXPECT_EQ( SUCCESSO_, underTest_->modificaTavolo( tavolo, 3) )   << "Errore sulla modifica di un tavolo occupato 2/2.";
+		
+	
+	// si mangia bene e la gente torna subito
+	EXPECT_EQ( SUCCESSO_, underTest_->aggiungiPersona( prima, 	tavolo) ) << "Errore inserimento prima persona 2/2.";
+	EXPECT_EQ( SUCCESSO_, underTest_->aggiungiPersona( seconda, tavolo) ) << "Errore inserimento seconda persona 2/2.";
+	EXPECT_EQ( SUCCESSO_, underTest_->aggiungiPersona( terza, tavolo) )   << "Errore inserimento terza persona 2/2.";
+
+}
+
 /**
  * Anche i test case necessitano di un main
  */
