@@ -4,15 +4,15 @@
 # Google Test Dir
 #GTEST_DIR = ../../gtest_exp/gtest_trunk
 GTEST_DIR = /cygdrive/c/Users/vmarrazzo/Documents/gtest-1.6.0
+GMOCK_DIR = /cygdrive/c/Users/vmarrazzo/Documents/gmock-1.6.0
 
 # Flags passed to the preprocessor.
 GTEST_CPPFLAGS = -I$(GTEST_DIR)/include
+GMOCK_CPPFLAGS = -I$(GMOCK_DIR)/include
 
-GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h \
-                $(GTEST_DIR)/include/gtest/internal/*.h
+GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h $(GTEST_DIR)/include/gtest/internal/*.h
 
-# Usually you shouldn't tweak such internal variables, indicated by a
-# trailing _.
+# Usually you shouldn't tweak such internal variables, indicated by a trailing _.
 GTEST_SRCS_ = $(GTEST_DIR)/src/*.cc $(GTEST_DIR)/src/*.h $(GTEST_HEADERS)
 
 # Flags passed to the C++ compiler.
@@ -56,14 +56,29 @@ decode_stackdump : ristoranteTest.exe
 	
 ristoranteTest.exe : persona.o tavolo.o ristorante.o ristoranteTest.o gtest.a
 	$(CXX) $(GTEST_CPPFLAGS) $(LDFLAGS) $(LD_LIBRARY) $^ -o $@
+	
+gruppoMockTest.exe : persona.o tavolo.o ristorante.o gruppoMockTest.o gmock.a gtest.a
+	$(CXX) $(GTEST_CPPFLAGS) $(LDFLAGS) $(LD_LIBRARY) $^ -o $@	
 
 ristoranteTest.o :
-	$(CXX) $(GTEST_CPPFLAGS) -I$(GTEST_DIR) $(CXXFLAGS) -c ristoranteTest.cpp	
+	$(CXX) $(GTEST_CPPFLAGS) $(CXXFLAGS) -c ristoranteTest.cpp
+
+gruppoMockTest.o :
+	$(CXX) $(GTEST_CPPFLAGS) $(GMOCK_CPPFLAGS) $(CXXFLAGS) -c gruppoMockTest.cpp
+
+mockgruppo.o :
+	$(CXX) $(GTEST_CPPFLAGS) $(GMOCK_CPPFLAGS) -c mockgruppo.cpp	
 	
 gtest-all.o : $(GTEST_SRCS_)
-	$(CXX) $(GTEST_CPPFLAGS) -I$(GTEST_DIR) $(CXXFLAGS) -c \
+	$(CXX) $(GTEST_CPPFLAGS) -I$(GTEST_DIR) $(GMOCK_CPPFLAGS) -I$(GMOCK_DIR) $(CXXFLAGS) -c \
             $(GTEST_DIR)/src/gtest-all.cc
+			
+gmock-all.o : $(GTEST_SRCS_)
+	$(CXX) $(GTEST_CPPFLAGS) -I$(GTEST_DIR) $(GMOCK_CPPFLAGS) -I$(GMOCK_DIR) $(CXXFLAGS) -c \
+            $(GMOCK_DIR)/src/gmock-all.cc
 
 gtest.a : gtest-all.o
 	$(AR) $(ARFLAGS) $@ $^
 	
+gmock.a : gtest-all.o gmock-all.o
+	$(AR) $(ARFLAGS) $@ $^

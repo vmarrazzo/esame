@@ -1,10 +1,6 @@
 #include "ristorante.h"
 #include "gtest/gtest.h"
-#include <string>
-#include <sstream>
 
-
-using namespace std;
 using namespace ristorazione;
 
 class RistoranteSuite : public ::testing::Test {
@@ -21,34 +17,6 @@ class RistoranteSuite : public ::testing::Test {
 			if ( underTest_ != NULL )
 				delete underTest_;
 		}
-		/*
-		void checkElementoTavola( int riga, int colonna, bool expVuota, TIPO expTipo = NULL__) {
-		
-			Pezzo* tmp = underTest_->getElemento( riga, colonna);
-			bool esito = false;
-			TIPO t = NULL__;
-        
-			ostringstream messaggioErrore;
-			messaggioErrore << "Elemento (" << riga << "," << colonna << ")";  
-	
-			if ( expVuota ) {
-				esito = (NULL == tmp);
-				messaggioErrore << " NON vuoto!"; 
-			}
-			else {
-				esito = (NULL != tmp);
-				messaggioErrore << " vuoto!"; 
-				
-				if ( tmp != NULL )	
-					t = tmp->getType();
-			}
-			
-			EXPECT_TRUE(esito) << messaggioErrore.str();
-			
-			if ( !expVuota && expTipo != NULL__ )
-				EXPECT_EQ( expTipo, t);
-		}
-		*/
 };
 
 TEST_F( RistoranteSuite, SempliceInserimento) {
