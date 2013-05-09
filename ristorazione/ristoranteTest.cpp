@@ -113,6 +113,16 @@ TEST_F( RistoranteSuite, ModificaTavolo) {
 
 }
 
+TEST_F( RistoranteSuite, CreoRistoranteVuoto) {
+
+	Tavolo** input = new Tavolo*[2];
+
+	input[0] = new Tavolo(2); // Tavolo 1
+	input[1] = new Tavolo(3); // Tavolo 2
+
+	underTest_ = new Ristorante( 2, input);
+}
+
 /**
  * Anche i test case necessitano di un main
  */
