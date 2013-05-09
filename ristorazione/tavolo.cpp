@@ -53,5 +53,10 @@ namespace ristorazione {
   
         return resp;
     }
+	
+	unsigned int Tavolo::numeroPosti() {
+	
+		return this->posti__;
+	}
 
 }

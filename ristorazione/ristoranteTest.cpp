@@ -1,9 +1,17 @@
-#include "ristorante.h"
+#include <vector>
+
 #include "gtest/gtest.h"
+#include "gmock/gmock.h"
+
+#include "ristorante.h"
+#include "mockgruppo.h"
+#include "placeGroup2Table.h"
+
 
 using namespace ristorazione;
+using namespace testing;
 
-class RistoranteSuite : public ::testing::Test {
+class RistoranteSuite : public Test {
 
 	protected:
 		// puntatore all'oggetto sotto test
@@ -121,6 +129,119 @@ TEST_F( RistoranteSuite, CreoRistoranteVuoto) {
 	input[1] = new Tavolo(3); // Tavolo 2
 
 	underTest_ = new Ristorante( 2, input);
+}
+
+TEST_F( RistoranteSuite, NumeroPostiTavolo) {
+
+	unsigned int posti 					= 2;
+	unsigned int posti_dopo_modifica 	= 8;
+
+	Tavolo* ut = new Tavolo(posti);
+	
+	EXPECT_EQ( posti, ut->numeroPosti() ) << "Errore numero posti alla costruzione.";
+	
+	ut->cambiaNumeroPosti(posti_dopo_modifica);
+	
+	EXPECT_EQ( posti_dopo_modifica, ut->numeroPosti() ) << "Errore numero posti dopo modifica.";
+}
+
+TEST_F( RistoranteSuite, NumeroTavoliRistorante) {
+
+	unsigned int numTavoli = 2;
+	unsigned int postiTav1 = 3;
+	unsigned int postiTav2 = 8;
+
+	Tavolo** input = new Tavolo*[numTavoli];
+
+	input[0] = new Tavolo(postiTav1); // Tavolo 1
+	input[1] = new Tavolo(postiTav2); // Tavolo 2
+
+	underTest_ = new Ristorante( numTavoli, input);
+
+	map<unsigned int,unsigned int> listaTavoli = underTest_->elencoTavoliPosti();
+	
+	EXPECT_EQ( numTavoli, listaTavoli.size() ) << "Errore numero tavoli non coincide.";
+	
+	EXPECT_EQ( postiTav1, listaTavoli[1] ) << "Errore numero posti tavolo 1.";
+	EXPECT_EQ( postiTav2, listaTavoli[2] ) << "Errore numero posti tavolo 2.";
+}
+
+/**
+ * Questo test sparirà a regime
+ */
+/*
+TEST_F( RistoranteSuite, SempliceTestMock) {
+
+	Tavolo** input = new Tavolo*[1];
+	
+	input[0] = new Tavolo(3);
+	
+	underTest_ = new Ristorante( 1, input);
+	
+	MockGruppo gruppo;
+
+	EXPECT_CALL( gruppo, QuantePersone())
+				.Times(AtLeast(1))
+				.WillRepeatedly(Return(100));
+
+	EXPECT_EQ( 100, gruppo.QuantePersone()) << "Il Mock non funge!";
+
+}
+*/
+TEST_F( RistoranteSuite, Test_placeGroup2Table) { 
+
+	Tavolo** input = new Tavolo*[2];
+	
+	input[0] = new Tavolo(2);
+	input[1] = new Tavolo(3);
+	
+	underTest_ = new Ristorante( 2, input);
+
+	Persona* G1_P1 		= new Persona();
+	Persona* G1_P2	 	= new Persona();
+
+	Persona* G2_P1 		= new Persona();
+	Persona* G2_P2	 	= new Persona();
+	Persona* G2_P3	 	= new Persona();
+	
+	MockGruppo gruppo_1;
+
+	EXPECT_CALL( gruppo_1, QuantePersone())
+				.WillRepeatedly(Return(2));	
+
+	EXPECT_CALL( gruppo_1, QualePersona(1))
+				.WillRepeatedly(Return(G1_P1));	
+
+	EXPECT_CALL( gruppo_1, QualePersona(2))
+				.WillRepeatedly(Return(G1_P2));	
+				
+	MockGruppo gruppo_2;
+
+	EXPECT_CALL( gruppo_2, QuantePersone())
+				.WillRepeatedly(Return(3));
+				
+	EXPECT_CALL( gruppo_2, QualePersona(1))
+				.WillRepeatedly(Return(G2_P1));	
+
+	EXPECT_CALL( gruppo_2, QualePersona(2))
+				.WillRepeatedly(Return(G2_P2));	
+				
+	EXPECT_CALL( gruppo_2, QualePersona(3))
+				.WillRepeatedly(Return(G2_P3));	
+
+	vector<Gruppo*> gruppi;
+	
+	gruppi.insert( gruppi.begin(), &gruppo_1);
+	gruppi.insert( gruppi.begin(), &gruppo_2);
+	
+	placeGroup2Table( underTest_, gruppi);
+	
+	EXPECT_EQ( PERSONA_GIA_PRESENTE_, underTest_->aggiungiPersona( G1_P1, (unsigned int)1) ) << "Errore la persona G1_P1 NON si trova nel tavolo 1.";
+	EXPECT_EQ( PERSONA_GIA_PRESENTE_, underTest_->aggiungiPersona( G1_P2, (unsigned int)1) ) << "Errore la persona G1_P2 NON si trova nel tavolo 1.";
+	
+	EXPECT_EQ( PERSONA_GIA_PRESENTE_, underTest_->aggiungiPersona( G2_P1, (unsigned int)2) ) << "Errore la persona G2_P1 NON si trova nel tavolo 2.";
+	EXPECT_EQ( PERSONA_GIA_PRESENTE_, underTest_->aggiungiPersona( G2_P2, (unsigned int)2) ) << "Errore la persona G2_P2 NON si trova nel tavolo 2.";	
+	EXPECT_EQ( PERSONA_GIA_PRESENTE_, underTest_->aggiungiPersona( G2_P3, (unsigned int)2) ) << "Errore la persona G2_P3 NON si trova nel tavolo 2.";	
 }
 
 /**

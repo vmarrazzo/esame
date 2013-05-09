@@ -9,6 +9,7 @@ ristorante.h
 
 #include <vector>
 #include <list>
+#include <map>
 #include "persona.h"
 #include "tavolo.h"
 
@@ -31,6 +32,7 @@ namespace ristorazione {
         ESITO aggiungiPersona(Persona* p, unsigned int numTavolo);
         void liberaTavolo(unsigned int numTavolo);
         ESITO modificaTavolo(unsigned int numTavolo, unsigned int posti);
+		map<unsigned int,unsigned int> elencoTavoliPosti();
   };
 
 }

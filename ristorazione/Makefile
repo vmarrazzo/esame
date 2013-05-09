@@ -1,5 +1,5 @@
 # Compiler
-#CXX = clang++
+CXX = clang++
 
 # Google Test Dir
 #GTEST_DIR = ../../gtest_exp/gtest_trunk
@@ -60,14 +60,14 @@ test_stackdump : ristoranteTest.exe
 mock_stackdump : gruppoMockTest.exe
 	awk '/^[0-9]/{print $$2}' $^.stackdump | addr2line.exe -f -e $^
 	
-ristoranteTest.exe : persona.o tavolo.o ristorante.o ristoranteTest.o gtest.a
+ristoranteTest.exe : persona.o tavolo.o ristorante.o placeGroup2Table.o ristoranteTest.o gmock.a gtest.a
 	$(CXX) $(GTEST_CPPFLAGS) $(LDFLAGS) $(LD_LIBRARY) $^ -o $@
 	
 gruppoMockTest.exe : persona.o tavolo.o ristorante.o gruppoMockTest.o gmock.a gtest.a
 	$(CXX) $(GTEST_CPPFLAGS) $(LDFLAGS) $(LD_LIBRARY) $^ -o $@	
 
 ristoranteTest.o :
-	$(CXX) $(GTEST_CPPFLAGS) $(CXXFLAGS) -c ristoranteTest.cpp
+	$(CXX) $(GTEST_CPPFLAGS) $(GMOCK_CPPFLAGS) $(CXXFLAGS) -c ristoranteTest.cpp
 
 gruppoMockTest.o :
 	$(CXX) $(GTEST_CPPFLAGS) $(GMOCK_CPPFLAGS) $(CXXFLAGS) -c gruppoMockTest.cpp

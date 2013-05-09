@@ -4,5 +4,5 @@
 class MockGruppo : public Gruppo {
 	public:
 		MOCK_METHOD0(QuantePersone, int());
-		//MOCK_METHOD1(QualePersona, Persona*(int i));
+		MOCK_METHOD1(QualePersona, Persona*(int i));
 };

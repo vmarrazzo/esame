@@ -131,7 +131,17 @@ namespace ristorazione {
 			}
 		}
 	}
-
-
+	
+	map<unsigned int,unsigned int> Ristorante::elencoTavoliPosti() {
+		
+		map<unsigned int,unsigned int> resp;
+		
+		unsigned int nTavoli = this->tavoli__.size();
+		
+		for ( unsigned int index = 0 ; index < nTavoli ; index++ )
+			resp[(index+1)] = this->tavoli__[index]->numeroPosti();
+	
+		return resp;
+	}
 
 }
