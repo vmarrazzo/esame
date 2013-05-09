@@ -12,23 +12,21 @@ namespace ristorazione {
 	
 	Ristorante::~Ristorante() {
 
-		do
+		while( !this->tavoli__.empty() )
 		{
 			vector<Tavolo*>::iterator it = this->tavoli__.begin();
 			Tavolo* tmp = *it;
 			delete tmp;
 			this->tavoli__.erase(it);
 		}
-		while( !this->tavoli__.empty() );
 		
-		do
+		while( !this->persone__.empty() )
 		{
 			list<Persona*>::iterator it = this->persone__.begin();
 			Persona* tmp = *it;
 			delete tmp;
 			this->persone__.erase(it);
 		}
-		while( !this->persone__.empty() );
 	}
 	
 	ESITO Ristorante::aggiungiPersona(Persona* p, unsigned int numTavolo) {

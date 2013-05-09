@@ -30,12 +30,13 @@ TEST_F( GruppoMockSuite, SempliceInserimento) {
 	
 	underTest_ = new Ristorante( 1, input);
 	
-	MockGruppo gruppo;                          
-	EXPECT_CALL( gruppo, QuantePersone())             
+	MockGruppo gruppo;
+
+	EXPECT_CALL( gruppo, QuantePersone())
 				.Times(AtLeast(1))
 				.WillRepeatedly(Return(100));
 
-	//EXPECT_EQ( 100, gruppo.QuantePersone()) << "Il Mock non funge!";
+	EXPECT_EQ( 100, gruppo.QuantePersone()) << "Il Mock non funge!";
 }
 
 int main(int argc, char** argv) {

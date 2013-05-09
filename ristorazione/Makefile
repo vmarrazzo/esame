@@ -40,6 +40,9 @@ all : clean persona.o tavolo.o ristorante.o
 test : all ristoranteTest.exe
 	./ristoranteTest.exe
 	
+mock : all gruppoMockTest.exe
+	./gruppoMockTest.exe
+	
 coverage : coverage_prepare all ristoranteTest.exe
 	./ristoranteTest.exe
 	gcov $(SOURCES)
@@ -51,7 +54,10 @@ coverage_prepare :
 	
 # da notare  nel comando awk ci vorrebbe solo un $ 
 # ma per la corretta interpreatazione in make diventano $$
-decode_stackdump : ristoranteTest.exe
+test_stackdump : ristoranteTest.exe
+	awk '/^[0-9]/{print $$2}' $^.stackdump | addr2line.exe -f -e $^
+
+mock_stackdump : gruppoMockTest.exe
 	awk '/^[0-9]/{print $$2}' $^.stackdump | addr2line.exe -f -e $^
 	
 ristoranteTest.exe : persona.o tavolo.o ristorante.o ristoranteTest.o gtest.a
