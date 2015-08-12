@@ -1,4 +1,6 @@
-esame
+#esame
+
+[![Build Status](https://drone.io/github.com/vmarrazzo/esame/status.png)](https://drone.io/github.com/vmarrazzo/esame/latest)
 
 Questo repository contiene alcuni esercizi in C/C++ da me sviluppati partendo dalle tracce di esame :
 
